@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './OrderPage.css'
 
 const TAKEAWAY_CHARGE = 200
+const API_URL = 'https://payment-backend-2x5q.onrender.com'
 
 const items = [
   {
@@ -46,6 +47,9 @@ function OrderPage() {
   const [quantities, setQuantities] = useState(
     Object.fromEntries(items.map((item) => [item.id, 0]))
   )
+  const [customerEmail, setCustomerEmail] = useState('')
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
 
   const updateQty = (id, delta) => {
     setQuantities((prev) => ({
@@ -64,6 +68,76 @@ function OrderPage() {
   const takeawayTotal = TAKEAWAY_CHARGE * spaghettiPortions
   const total = itemsTotal + takeawayTotal
   const hasItems = itemsTotal > 0
+
+  const handleCheckout = async () => {
+    setErrorMessage('')
+
+    if (!customerEmail) {
+      setErrorMessage('Please enter your email to continue.')
+      return
+    }
+
+    setIsProcessing(true)
+
+    try {
+      // Build the cart using slugs — matches what's set up in the backend
+      const cartItems = items
+        .filter((item) => quantities[item.id] > 0)
+        .map((item) => ({ product_slug: item.id, quantity: quantities[item.id] }))
+
+      // Add the takeaway fee as its own line item, quantity = spaghetti portions
+      if (spaghettiPortions > 0) {
+        cartItems.push({ product_slug: 'takeaway', quantity: spaghettiPortions })
+      }
+
+      const orderRes = await fetch(`${API_URL}/api/orders`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerEmail,
+          items: cartItems,
+        }),
+      })
+
+      const order = await orderRes.json()
+
+      if (!orderRes.ok) {
+        setErrorMessage(order.error || 'Something went wrong creating your order.')
+        setIsProcessing(false)
+        return
+      }
+
+      // Launch Paystack Inline using what the backend gave us
+      const handler = window.PaystackPop.setup({
+        key: order.public_key,
+        email: order.email,
+        amount: order.amount_kobo,
+        ref: order.reference,
+        callback: function (response) {
+          // The webhook is the real source of truth — this is just
+          // immediate feedback for the customer.
+          fetch(`${API_URL}/api/payments/verify/${response.reference}`)
+            .then((r) => r.json())
+            .then((data) => {
+              if (data.status === 'success') {
+                alert('Payment successful! Your order is being prepared.')
+                setQuantities(Object.fromEntries(items.map((item) => [item.id, 0])))
+              } else {
+                setErrorMessage('Payment could not be confirmed. Please contact us with your reference: ' + response.reference)
+              }
+            })
+        },
+        onClose: function () {
+          setIsProcessing(false)
+        },
+      })
+      handler.openIframe()
+    } catch (err) {
+      setErrorMessage('Something went wrong. Please try again.')
+    } finally {
+      setIsProcessing(false)
+    }
+  }
 
   return (
     <section className='Order'>
@@ -115,8 +189,25 @@ function OrderPage() {
           <span>Total</span>
           <span>₦{total.toLocaleString()}</span>
         </div>
-        <button className="checkout-btn" disabled={!hasItems}>
-          Proceed to Pay
+
+        {hasItems && (
+          <input
+            type="email"
+            placeholder="Your email"
+            value={customerEmail}
+            onChange={(e) => setCustomerEmail(e.target.value)}
+            className="checkout-email-input"
+          />
+        )}
+
+        {errorMessage && <p className="summary-error">{errorMessage}</p>}
+
+        <button
+          className="checkout-btn"
+          disabled={!hasItems || isProcessing}
+          onClick={handleCheckout}
+        >
+          {isProcessing ? 'Processing...' : 'Proceed to Pay'}
         </button>
       </aside>
     </div>
