@@ -1,21 +1,32 @@
 .hero {
-   min-height: 100vh;
+  position: relative; /* needed so the overlay anchors to this element */
+  height: 100vh;
   width: 100%;
   display: flex;
   align-items: center;
   gap: 2rem;
   padding: 2rem 4rem;
-  background: #ffffff;
   overflow: hidden;
+  background-image: url('/bg.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.55));
 }
 
 .hero-col {
   display: flex;
   flex-direction: column;
+  z-index: 2; /* above the overlay */
 }
 
 .hero-text-col {
-  width: auto;
+  width: 100%;
   flex: 0.8 1 0;
 }
 
@@ -25,17 +36,33 @@
   font-size: clamp(1rem, 6vw + 1rem, 10rem);
   line-height: 1.1;
   color: #1a1a1a;
-  margin: 0 0 12px ;
+  margin: 0 0 12px;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
 }
-.hero-title span {
-  padding-left: 6rem;
+
+.btm-tit {
+  display: flex;
+  align-items: baseline;
+  
 }
+
+.btm-tit img {
+  width: 110px;
+  height: 110px;
+  align-self: flex-end; /* nudges the image down to sit on the text baseline */
+}
+
+
 .hero-subtitle {
   display: flex;
   align-items: center;
   gap: 12px;
 }
+
+
+
 
 .hero-subtitle::before {
   content: '';
@@ -47,12 +74,12 @@
 .hero-subtitle {
   font-family: 'Lato', sans-serif;
   font-size: clamp(1rem, 0.6vw + 0.9rem, 1.45rem);
-  color: #666;
+  color: #fff;
 }
-
 .hero-cta {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   background: #c0392b;
   color: #fff;
@@ -62,7 +89,8 @@
   font-weight: 600;
   text-decoration: none;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  width: fit-content;
+  width: 100%;
+  margin-top: 1.5rem;
 }
 
 .hero-cta:hover {
@@ -78,8 +106,8 @@
 }
 
 .spag-img {
-  width: clamp(200px, 50vw, 620px);
-  height: clamp(200px, 50vw, 620px);
+  width: clamp(200px, 45vw, 620px);
+  height: clamp(200px, 45vw, 620px);
   border-radius: 50%;
   object-fit: cover;
   box-shadow: 0 8px 24px rgba(0,0,0,0.1);
@@ -126,6 +154,25 @@
   border-color: #c0392b;
   width: clamp(10px, 90%, 603px);
 }
+.small-cta{
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .hero {
+    padding: 2rem 2rem;
+    gap: 1.5rem;
+  }
+
+  .hero-pills-col {
+    margin-right: -4rem;
+    margin-left: -2rem;
+  }
+  .hero-subtitle::before {
+    width: 10px;
+  
+}
+}
 
 @media (max-width: 780px) {
   .hero {
@@ -136,12 +183,40 @@
     gap: 1.5rem;
     text-align: center;
   }
+  .hero-pills-col{
+    display:none;
+  }
 
   .hero-text-col {
     order: -1; /* title first */
     flex: none;
     align-items: center;
     display: flex;
+  }
+   .hero-title {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 2px;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: 5rem;
+  }
+  .hero-subtitle {
+    font-size: 2rem;
+  }
+  .hero-subtitle::before {
+    display: none;
+  }
+
+  .btm-tit {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .btm-tit img {
+    width: 100px;
+    height: 100px;
   }
 
   .hero-image-col {
@@ -178,15 +253,16 @@
     height: 4rem; /* match the others — no more stretching */
     margin-top: 0;
   }
-
-  .hero-title {
-    margin: 0;
-    font-size: clamp(2rem, 8vw, 3rem);
-    display: flex;
-  }
-
   .spag-img {
     width: clamp(220px, 55vw, 320px);
     height: clamp(220px, 55vw, 320px);
+  }
+  .hero-cta {
+    display: none;
+  }
+  .small-cta {
+    display: inline-flex;
+    margin-top: 1rem;
+    width: fit-content;
   }
 }

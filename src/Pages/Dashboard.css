@@ -1,0 +1,91 @@
+.dashboard-shell {
+  display: flex;
+  min-height: 100vh;
+  font-family: 'Lato', sans-serif;
+}
+
+.sidebar {
+  width: 200px;
+  flex-shrink: 0;
+  background: #faf6f2;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-right: 1px solid #eee;
+}
+
+.sidebar-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: #c0392b;
+  margin: 0 0 24px;
+  padding-left: 10px;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: none;
+  background: none;
+  text-align: left;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.9rem;
+  color: #555;
+  cursor: pointer;
+}
+
+.sidebar-item.active {
+  background: #c0392b;
+  color: #fff;
+  font-weight: 600;
+}
+
+.dashboard-main {
+  flex: 1;
+  padding: 2rem 2.5rem;
+}
+
+.sub-tabs {
+  display: flex;
+  gap: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+}
+
+.sub-tab {
+  background: none;
+  border: none;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.9rem;
+  color: #777;
+  cursor: pointer;
+  padding-bottom: 8px;
+  border-bottom: 2px solid transparent;
+}
+
+.sub-tab.active {
+  color: #c0392b;
+  border-bottom-color: #c0392b;
+  font-weight: 600;
+}
+
+@media (max-width: 700px) {
+  .dashboard-shell {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    border-right: none;
+    border-bottom: 1px solid #eee;
+  }
+  .sidebar-brand {
+    display: none;
+  }
+}

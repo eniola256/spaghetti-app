@@ -1,0 +1,108 @@
+.admin-shell {
+  display: flex;
+  min-height: 100vh;
+  font-family: 'Lato', sans-serif;
+}
+
+.admin-sidebar {
+  width: 200px;
+  flex-shrink: 0;
+  background: #faf6f2;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-right: 1px solid #eee;
+}
+
+.admin-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: #c0392b;
+  margin: 0 0 24px;
+  padding-left: 10px;
+}
+
+.admin-sidebar-item {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: none;
+  background: none;
+  text-align: left;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.9rem;
+  color: #555;
+  cursor: pointer;
+}
+
+.admin-sidebar-item.active {
+  background: #c0392b;
+  color: #fff;
+  font-weight: 600;
+}
+
+.admin-main {
+  flex: 1;
+  padding: 2rem 2.5rem;
+}
+
+.admin-section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  margin: 0 0 20px;
+  color: #1a1a1a;
+}
+
+.kanban {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.kanban-col-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.status-paid { color: #0C447C; }
+.status-preparing { color: #854F0B; }
+.status-ready { color: #085041; }
+.status-picked_up { color: #777; }
+
+.kanban-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+}
+
+.kanban-card-id {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.kanban-card-items {
+  margin: 2px 0 0;
+  font-size: 0.78rem;
+  color: #777;
+}
+
+@media (max-width: 800px) {
+  .admin-shell {
+    flex-direction: column;
+  }
+  .admin-sidebar {
+    width: 100%;
+    flex-direction: row;
+    border-right: none;
+    border-bottom: 1px solid #eee;
+  }
+  .kanban {
+    grid-template-columns: 1fr;
+  }
+}

@@ -5,9 +5,15 @@ function Hero() {
   return (
     <section className="hero">
       <div className="hero-col hero-text-col">
-        <h1 className="hero-title">Spag <br /> <span>Zone</span></h1>
+        <h1 className="hero-title">
+          <span>Spag</span>
+          <span className="btm-tit">
+            <img src="/logospag.png" alt="spaglogo" />
+            Zone
+          </span>
+        </h1>
         <p className="hero-subtitle">Deliciousness awaits you <br />just a click away!</p>
-        <Link to="/order" className="hero-cta">Order Now</Link>
+        <Link to="/dashboard" className="hero-cta">Order Now</Link>
       </div>
 
       <div className="hero-col hero-image-col">
@@ -38,6 +44,7 @@ function Hero() {
           </div>
         </div>
       </div>
+       <Link to="/order" className="hero-cta small-cta ">Order Now</Link>
     </section>
   )
 }
