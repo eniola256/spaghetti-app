@@ -16,7 +16,7 @@ function App() {
     <AuthProvider>
       <AdminAuthProvider>
       <BrowserRouter>
-      <Navbar />
+      <NavBar />
         <Routes>
           <Route path="/" element={
             <div className="app">
