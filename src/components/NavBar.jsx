@@ -1,8 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
-import './Navbar.css'
+import './NavBar.css'
 
-function Navbar() {
+function NavBar() {
   const { user, loading, logout } = useAuth()
   const navigate = useNavigate()
 
