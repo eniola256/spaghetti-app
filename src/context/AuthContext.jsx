@@ -51,6 +51,7 @@ export function AuthProvider({ children }) {
     })
     const data = await res.json()
     if (!res.ok) throw { status: res.status, error: data.error }
+    console.log('Login success, setting user:', data) // temp debug line
     setUser(data)
     return data
   }

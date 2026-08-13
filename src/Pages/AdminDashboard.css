@@ -3,7 +3,20 @@
   min-height: 100vh;
   font-family: 'Lato', sans-serif;
 }
+.admin-status-msg {
+  font-size: 0.9rem;
+  color: #777;
+}
 
+.admin-error {
+  color: #c0392b;
+}
+
+.kanban-empty {
+  font-size: 0.78rem;
+  color: #bbb;
+  font-style: italic;
+}
 .admin-sidebar {
   width: 200px;
   flex-shrink: 0;
