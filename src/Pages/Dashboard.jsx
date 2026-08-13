@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import MenuSection from '../components/dashboard/MenuSection.jsx'
+import MenuSection from '../components/Dashboard/MenuSection.jsx'
 import './Dashboard.css'
 
 const navItems = [

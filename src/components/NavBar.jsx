@@ -32,4 +32,4 @@ function Navbar() {
   )
 }
 
-export default Navbar
+export default NavBar
