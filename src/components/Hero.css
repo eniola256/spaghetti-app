@@ -229,17 +229,39 @@
 }
 
 @media (max-width: 480px) {
-  .hero-title{
+  .hero-text-col {
+    position: relative;
+    z-index: 4; /* above the red band (1) and the plate (2) */
+  }
+
+  .hero-title {
     margin: 20px 0;
+    position: relative;
+    z-index: 4;
   }
-  .hero-subtitle{
+
+  .hero-subtitle {
     font-size: 1.4rem;
+    position: relative;
+    z-index: 4;
   }
-  .small-cta{
-    position: absolute;
-    top: 64%;
-    left: 37%;
+
+  .hero-image-col {
     margin: 0;
-    z-index: 999;
+    padding: 0;
   }
+
+  .hero-image-col::before {
+    transform: translate(-50%, -50%) rotate(-45deg);
+    height: 300px;
+    width: 250vw;
+  }
+
+  .small-cta {
+    margin: 0;
+    font-size: 1.5rem;
+    position: relative;
+    z-index: 4;
+  }
+  
 }
