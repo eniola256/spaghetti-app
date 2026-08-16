@@ -4,3 +4,14 @@
   box-sizing: border-box;
 }
 
+.app {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero {
+  flex: 1;
+  min-height: 0;
+}

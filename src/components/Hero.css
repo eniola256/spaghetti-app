@@ -1,5 +1,4 @@
 .hero {
-  height: 100vh;
   width: 100%;
   display: flex;
   align-items: center;
@@ -156,9 +155,21 @@
     flex-direction: column;
     height: auto;
     min-height: 100vh;
-    padding: 3rem 1.5rem;
+    padding: 0 1.5rem;
     gap: 1.5rem;
     text-align: center;
+  }
+  .hero-title{
+    display: flex;
+    flex-direction: row;
+    font-size: 5rem;
+    margin: 20px 0 0 0;
+  }
+  .btm-tit{
+    padding: 0 15px ;
+  }
+  .hero-subtitle{
+    font-size: 1rem;
   }
   .hero-pills-col{
     display:none;
@@ -170,30 +181,9 @@
     align-items: center;
     display: flex;
   }
-   .hero-title {
-    flex-direction: row;
-    align-items: baseline;
-    gap: 2px;
-    flex-wrap: wrap;
-    justify-content: center;
-    font-size: 5rem;
-  }
-  .hero-subtitle {
-    font-size: 2rem;
-  }
+   
   .hero-subtitle::before {
     display: none;
-  }
-
-  .btm-tit {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-  }
-
-  .btm-tit img {
-    width: 100px;
-    height: 100px;
   }
 
   .hero-image-col {
@@ -203,36 +193,9 @@
     align-items: center;
     justify-content: center;
   }
-
-  .hero-pills-col {
-    order: 1; /* pills last */
-    flex: none;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin: 0;
-    gap: 12px;
-    overflow-x: auto;
-    padding-bottom: 8px;
-  }
-
-  .pill {
-    flex-shrink: 0;
-    width: 8.5rem;
-    height: 4rem;
-    writing-mode: horizontal-tb; /* undo the vertical text rotation */
-    transform: none;
-    padding: 10px 16px;
-  }
-
-  .pill-active {
-    height: 4rem; /* match the others — no more stretching */
-    margin-top: 0;
-  }
   .spag-img {
-    width: clamp(220px, 55vw, 320px);
-    height: clamp(220px, 55vw, 320px);
+    width: 400px;
+    height: 400px;
   }
   .hero-cta {
     display: none;
@@ -241,5 +204,42 @@
     display: inline-flex;
     margin-top: 1rem;
     width: fit-content;
+  }
+  .hero-image-col {
+    position: relative;
+    overflow: visible;
+  }
+
+  .hero-image-col::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200vw;
+    height: 150px;
+    background: #c0392b;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    z-index: 1;
+  }
+
+  .spag-img {
+    position: relative;
+    z-index: 2; /* sits above the red slash */
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title{
+    margin: 20px 0;
+  }
+  .hero-subtitle{
+    font-size: 1.4rem;
+  }
+  .small-cta{
+    position: absolute;
+    top: 64%;
+    left: 37%;
+    margin: 0;
+    z-index: 999;
   }
 }

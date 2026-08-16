@@ -3,6 +3,7 @@
   min-height: 100vh;
   font-family: 'Lato', sans-serif;
 }
+
 .admin-status-msg {
   font-size: 0.9rem;
   color: #777;
@@ -12,11 +13,6 @@
   color: #c0392b;
 }
 
-.kanban-empty {
-  font-size: 0.78rem;
-  color: #bbb;
-  font-style: italic;
-}
 .admin-sidebar {
   width: 200px;
   flex-shrink: 0;
@@ -66,63 +62,83 @@
   color: #1a1a1a;
 }
 
-.kanban {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+.order-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 420px;
 }
 
-.kanban-col-label {
-  font-size: 0.75rem;
-  font-weight: 700;
-  margin: 0 0 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-}
-
-.status-paid { color: #0C447C; }
-.status-preparing { color: #854F0B; }
-.status-ready { color: #085041; }
-.status-picked_up { color: #777; }
-
-.kanban-card {
+.order-card-v2 {
   background: #fff;
   border: 1px solid #eee;
-  border-radius: 8px;
-  padding: 10px 12px;
-  margin-bottom: 10px;
+  border-radius: 12px;
+  padding: 16px 18px;
 }
 
-.status-success { color: #0C447C; } 
+.order-card-v2.completed {
+  background: #fafafa;
+}
 
-.kanban-card-id {
+.order-customer-name {
   margin: 0;
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
 }
 
-.kanban-card-items {
-  margin: 2px 0 0;
-  font-size: 0.78rem;
-  color: #777;
+.order-card-v2.completed .order-customer-name {
+  color: #999;
 }
-.kanban-advance-btn {
-  margin-top: 8px;
+
+.order-customer-email {
+  margin: 2px 0 10px;
+  font-size: 0.78rem;
+  color: #999;
+}
+
+.order-items-list {
+  margin: 0 0 12px;
+  font-size: 0.82rem;
+  color: #555;
+}
+
+.order-card-v2.completed .order-items-list {
+  color: #aaa;
+}
+
+.order-action-btn {
   width: 100%;
-  padding: 6px 10px;
+  padding: 8px;
   background: #c0392b;
   color: #fff;
   border: none;
   border-radius: 6px;
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   font-weight: 600;
   cursor: pointer;
 }
 
-.kanban-advance-btn:disabled {
+.order-action-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.completed-btn {
+  background: #ddd;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.order-waiting-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  background: #FAEEDA;
+  color: #854F0B;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
 @media (max-width: 800px) {
   .admin-shell {
     flex-direction: column;
@@ -132,8 +148,5 @@
     flex-direction: row;
     border-right: none;
     border-bottom: 1px solid #eee;
-  }
-  .kanban {
-    grid-template-columns: 1fr;
   }
 }

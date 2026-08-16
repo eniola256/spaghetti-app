@@ -15,20 +15,21 @@ function App() {
   return (
     <AuthProvider>
       <AdminAuthProvider>
-          <AuthModalProvider>
-            <BrowserRouter>
+        <AuthModalProvider>
+          <BrowserRouter>
+
+            <div className="app">
               <NavBar />
+
               <AuthModal />
+
               <Routes>
-                <Route path="/" element={
-                  <div className="app">
-                    <Hero />
-                  </div>
-                } />
+                <Route path="/" element={<Hero />} />
                 <Route path="/order" element={<OrderPage />} />
                 <Route path="/dashboard" element={<Dashboard />} />
-                
+
                 <Route path="/admin-login" element={<AdminLogin />} />
+
                 <Route
                   path="/admin"
                   element={
@@ -36,10 +37,11 @@ function App() {
                       <AdminDashboard />
                     </RequireAdmin>
                   }
-                  
                 />
               </Routes>
-            </BrowserRouter>
+            </div>
+
+          </BrowserRouter>
         </AuthModalProvider>
       </AdminAuthProvider>
     </AuthProvider>
