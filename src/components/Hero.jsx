@@ -1,16 +1,14 @@
 import './Hero.css'
 import { Link } from 'react-router-dom'
 
+
 function Hero() {
   return (
     <section className="hero">
       <div className="hero-col hero-text-col">
         <h1 className="hero-title">
           <span>Spag</span>
-          <span className="btm-tit">
-            <img src="/logospag.png" alt="spaglogo" />
-            Zone
-          </span>
+          <span className="btm-tit">Zone</span>
         </h1>
         <p className="hero-subtitle">Deliciousness awaits you <br />just a click away!</p>
         <Link to="/dashboard" className="hero-cta">Order Now</Link>

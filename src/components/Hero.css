@@ -1,5 +1,4 @@
 .hero {
-  position: relative; /* needed so the overlay anchors to this element */
   height: 100vh;
   width: 100%;
   display: flex;
@@ -7,16 +6,6 @@
   gap: 2rem;
   padding: 2rem 4rem;
   overflow: hidden;
-  background-image: url('/bg.jpg');
-  background-size: cover;
-  background-position: center;
-}
-
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.55));
 }
 
 .hero-col {
@@ -33,49 +22,37 @@
 .hero-title {
   font-family: 'Playfair Display', serif;
   font-weight: 700;
-  font-size: clamp(1rem, 6vw + 1rem, 10rem);
+  font-size: 9rem;
   line-height: 1.1;
   color: #1a1a1a;
-  margin: 0 0 12px;
+  margin: 0 0 12px 20px;
   z-index: 2;
   display: flex;
   flex-direction: column;
 }
 
 .btm-tit {
-  display: flex;
-  align-items: baseline;
+  padding-left: 80px;
   
 }
-
-.btm-tit img {
-  width: 110px;
-  height: 110px;
-  align-self: flex-end; /* nudges the image down to sit on the text baseline */
-}
-
 
 .hero-subtitle {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 15px;
+  color: #333333da;
+  font-family: 'Lato', sans-serif;
+  font-size: 1.5rem;
 }
-
-
-
 
 .hero-subtitle::before {
   content: '';
-  width: 110px;
+  width: 90px;
   height: 4px;
   background: #000;
   flex-shrink: 0;
 }
-.hero-subtitle {
-  font-family: 'Lato', sans-serif;
-  font-size: clamp(1rem, 0.6vw + 0.9rem, 1.45rem);
-  color: #fff;
-}
+
 .hero-cta {
   display: inline-flex;
   align-items: center;
@@ -83,13 +60,14 @@
   gap: 8px;
   background: #c0392b;
   color: #fff;
-  padding: 12px 28px;
+  padding: 12px 28px ;
+  margin-left: 280px;
   border-radius: 999px;
   font-family: 'Lato', sans-serif;
   font-weight: 600;
   text-decoration: none;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  width: 100%;
+  width: fit-content ;
   margin-top: 1.5rem;
 }
 
@@ -106,8 +84,8 @@
 }
 
 .spag-img {
-  width: clamp(200px, 45vw, 620px);
-  height: clamp(200px, 45vw, 620px);
+  width: 620px;
+  height: 620px;
   border-radius: 50%;
   object-fit: cover;
   box-shadow: 0 8px 24px rgba(0,0,0,0.1);
@@ -138,8 +116,8 @@
   font-size: 0.9rem;
   font-weight: 500;
   color: #333;
-  height: clamp(3rem, 4vw + 2rem, 7rem);
-  width: clamp(10px, 80%, 536px);
+  height: 6.5rem;
+  width: 80%;
 }
 .pill-txt {
   display: flex;
@@ -152,7 +130,7 @@
   background: #c0392b;
   color: #fff;
   border-color: #c0392b;
-  width: clamp(10px, 90%, 603px);
+  width: 92%;
 }
 .small-cta{
   display: none;
@@ -170,8 +148,7 @@
   }
   .hero-subtitle::before {
     width: 10px;
-  
-}
+  }
 }
 
 @media (max-width: 780px) {
