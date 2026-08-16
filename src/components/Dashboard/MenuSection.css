@@ -1,0 +1,19 @@
+.sticky-sub-tabs {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 5;
+}
+
+.menu-section-block {
+  padding: 2rem 0;
+  scroll-margin-top: 60px; /* keeps the sticky nav from covering the section title when jumped to */
+}
+
+.menu-section-heading {
+  font-size: 1.1rem;
+  margin: 0 0 1rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}

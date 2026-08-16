@@ -1,9 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
 import './NavBar.css'
+import {useAuthModal} from '../context/AuthModalContext.jsx'
 
 function NavBar() {
   const { user, loading, logout } = useAuth()
+  const { openModal } = useAuthModal()
   const navigate = useNavigate()
 
   const handleLogout = async () => {
@@ -12,7 +14,7 @@ function NavBar() {
   }
 
   return (
-    <nav className="navbar">
+     <nav className="navbar">
       <Link to="/" className="navbar-brand">Spag House</Link>
 
       <div className="navbar-actions">
@@ -23,8 +25,12 @@ function NavBar() {
           </>
         ) : (
           <>
-            <Link to="/login" className="navbar-link">Log in</Link>
-            <Link to="/signup" className="navbar-cta">Sign up</Link>
+            <button className="navbar-link navbar-link-btn" onClick={() => openModal('login')}>
+              Log in
+            </button>
+            <button className="navbar-cta" onClick={() => openModal('signup')}>
+              Sign up
+            </button>
           </>
         )}
       </div>

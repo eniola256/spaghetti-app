@@ -93,6 +93,8 @@
   margin-bottom: 10px;
 }
 
+.status-success { color: #0C447C; } 
+
 .kanban-card-id {
   margin: 0;
   font-weight: 600;
@@ -104,7 +106,23 @@
   font-size: 0.78rem;
   color: #777;
 }
+.kanban-advance-btn {
+  margin-top: 8px;
+  width: 100%;
+  padding: 6px 10px;
+  background: #c0392b;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+}
 
+.kanban-advance-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 @media (max-width: 800px) {
   .admin-shell {
     flex-direction: column;

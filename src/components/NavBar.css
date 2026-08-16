@@ -46,7 +46,14 @@
 .navbar-cta:hover {
   transform: translateY(-1px);
 }
-
+.navbar-link-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.9rem;
+  color: #333;
+}
 @media (max-width: 480px) {
   .navbar {
     padding: 1rem 1.25rem;

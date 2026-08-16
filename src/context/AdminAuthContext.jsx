@@ -9,8 +9,7 @@ export function AdminAuthProvider({ children }) {
   )
 
   const verifyKey = async (key) => {
-    // Adjust this endpoint path if your admin order-queue list route differs
-    const res = await fetch(`${API_BASE}/api/admin/orders`, {
+    const res = await fetch(`${API_BASE}/api/orders`, {
       headers: { 'x-admin-key': key },
     })
 

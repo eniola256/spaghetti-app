@@ -1,15 +1,23 @@
 import { useState } from 'react'
 import MenuSection from '../components/Dashboard/MenuSection.jsx'
+import OrderSection from '../components/Dashboard/OrderSection.jsx'
+import OrderProgress from '../components/Dashboard/OrderProgress.jsx'
 import './Dashboard.css'
 
 const navItems = [
-  { id: 'menu', label: 'Menu', icon: 'toolsKitchen2' },
-  { id: 'history', label: 'History', icon: 'history' },
-  { id: 'progress', label: 'Order progress', icon: 'truck-delivery' },
+  { id: 'menu', label: 'Menu' },
+  { id: 'orders', label: 'Orders' },
+  { id: 'progress', label: 'Order progress' },
 ]
 
 function Dashboard() {
   const [activeNav, setActiveNav] = useState('menu')
+  const [selectedOrderId, setSelectedOrderId] = useState(null)
+
+  const goToProgress = (id) => {
+    setActiveNav('progress')
+    setSelectedOrderId(id)
+  }
 
   return (
     <div className="dashboard-shell">
@@ -28,8 +36,10 @@ function Dashboard() {
 
       <main className="dashboard-main">
         {activeNav === 'menu' && <MenuSection />}
-        {activeNav === 'history' && <p>History section — next up</p>}
-        {activeNav === 'progress' && <p>Order progress section — next up</p>}
+        {activeNav === 'orders' && <OrderSection onSeeProgress={goToProgress} />}
+        {activeNav === 'progress' && (
+          <OrderProgress orderId={selectedOrderId} onBack={() => setActiveNav('orders')} />
+        )}
       </main>
     </div>
   )

@@ -1,0 +1,59 @@
+/* OrdersSection.css */
+.orders-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.orders-group-title {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #999;
+  margin: 0 0 12px;
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.order-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 14px 18px;
+}
+
+.order-card-ref {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.order-card-amount {
+  margin: 2px 0 0;
+  font-size: 0.82rem;
+  color: #777;
+}
+
+.see-progress-btn {
+  background: #c0392b;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.orders-empty {
+  color: #bbb;
+  font-style: italic;
+  font-size: 0.85rem;
+}

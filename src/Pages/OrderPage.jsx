@@ -1,55 +1,28 @@
 import { useState } from 'react'
+import { useAuth } from '../context/AuthContext.jsx'
+import { useAuthModal } from '../context/AuthModalContext.jsx'
 import './OrderPage.css'
 
-const TAKEAWAY_CHARGE = 200
-const API_URL = 'https://payment-backend-2x5q.onrender.com'
+const API_BASE = 'https://payment-backend-2x5q.onrender.com'
+const TAKEAWAY_CHARGE = 200 // display estimate only — backend adds the real fee
 
 const items = [
-  {
-    id: 'spaghetti',
-    name: 'Spaghetti',
-    description: 'One portion of our signature tomato-sauced spaghetti.',
-    price: 500,
-    image: './spag.png',
-    unit: 'portion',
-  },
-  {
-    id: 'egg',
-    name: 'Egg',
-    description: 'A boiled egg, sliced and seasoned.',
-    price: 300,
-    image: './egg.png ',
-  },
-  {
-    id: 'fish',
-    name: 'Fish',
-    description: 'Pan-fried fish fillet, lightly spiced.',
-    price: 800,
-    image: './fish.png',
-  },
-  {
-    id: 'plantain',
-    name: 'Fried Plantain',
-    description: 'Sweet ripe plantain, fried golden.',
-    price: 500,
-    image: './plantain.png',
-  },
-  {
-    id: 'sausage',
-    name: 'Sausage',
-    description: 'Grilled sausage link, sliced.',
-    price: 400,
-    image: './sausage.png',
-  },
+  { id: 'spaghetti', name: 'Spaghetti', description: 'One portion of our signature tomato-sauced spaghetti.', price: 500, image: './spag.png', unit: 'portion' },
+  { id: 'egg', name: 'Egg', description: 'A boiled egg, sliced and seasoned.', price: 300, image: './egg.png' },
+  { id: 'fish', name: 'Fish', description: 'Pan-fried fish fillet, lightly spiced.', price: 800, image: './fish.png' },
+  { id: 'plantain', name: 'Fried Plantain', description: 'Sweet ripe plantain, fried golden.', price: 500, image: './plantain.png' },
+  { id: 'sausage', name: 'Sausage', description: 'Grilled sausage link, sliced.', price: 400, image: './sausage.png' },
 ]
 
 function OrderPage() {
+  const { user } = useAuth()
+  const { openModal } = useAuthModal()
+
   const [quantities, setQuantities] = useState(
     Object.fromEntries(items.map((item) => [item.id, 0]))
   )
-  const [customerEmail, setCustomerEmail] = useState('')
-  const [isProcessing, setIsProcessing] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
+  const [checkoutError, setCheckoutError] = useState('')
+  const [processing, setProcessing] = useState(false)
 
   const updateQty = (id, delta) => {
     setQuantities((prev) => ({
@@ -59,158 +32,137 @@ function OrderPage() {
   }
 
   const spaghettiPortions = quantities['spaghetti']
-
-  const itemsTotal = items.reduce(
-    (sum, item) => sum + item.price * quantities[item.id],
-    0
-  )
-
+  const itemsTotal = items.reduce((sum, item) => sum + item.price * quantities[item.id], 0)
   const takeawayTotal = TAKEAWAY_CHARGE * spaghettiPortions
   const total = itemsTotal + takeawayTotal
   const hasItems = itemsTotal > 0
 
   const handleCheckout = async () => {
-    setErrorMessage('')
+    setCheckoutError('')
 
-    if (!customerEmail) {
-      setErrorMessage('Please enter your email to continue.')
+    if (!user) {
+      openModal('login')
       return
     }
 
-    setIsProcessing(true)
-
+    setProcessing(true)
     try {
-      // Build the cart using slugs — matches what's set up in the backend
-      const cartItems = items
+      const orderItems = items
         .filter((item) => quantities[item.id] > 0)
         .map((item) => ({ product_slug: item.id, quantity: quantities[item.id] }))
 
-      // Add the takeaway fee as its own line item, quantity = spaghetti portions
-      if (spaghettiPortions > 0) {
-        cartItems.push({ product_slug: 'takeaway', quantity: spaghettiPortions })
-      }
-
-      const orderRes = await fetch(`${API_URL}/api/orders`, {
+      const res = await fetch(`${API_BASE}/api/orders`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          customerEmail,
-          items: cartItems,
-        }),
+        credentials: 'include',
+        body: JSON.stringify({ items: orderItems }),
       })
 
-      const order = await orderRes.json()
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Could not create order')
 
-      if (!orderRes.ok) {
-        setErrorMessage(order.error || 'Something went wrong creating your order.')
-        setIsProcessing(false)
-        return
-      }
-
-      // Launch Paystack Inline using what the backend gave us
       const handler = window.PaystackPop.setup({
-        key: order.public_key,
-        email: order.email,
-        amount: order.amount_kobo,
-        ref: order.reference,
-        callback: function (response) {
-          // The webhook is the real source of truth — this is just
-          // immediate feedback for the customer.
-          fetch(`${API_URL}/api/payments/verify/${response.reference}`)
-            .then((r) => r.json())
-            .then((data) => {
-              if (data.status === 'success') {
-                alert('Payment successful! Your order is being prepared.')
-                setQuantities(Object.fromEntries(items.map((item) => [item.id, 0])))
-              } else {
-                setErrorMessage('Payment could not be confirmed. Please contact us with your reference: ' + response.reference)
-              }
-            })
+        key: data.public_key,
+        email: data.email,
+        amount: data.amount_kobo,
+        ref: data.reference,
+        callback: function () {
+          // Payment popup reported success. The webhook (server-side)
+          // is what actually confirms and updates order status —
+          // this just tells the customer what to expect next.
+          window.location.href = '/dashboard'
         },
         onClose: function () {
-          setIsProcessing(false)
+          setProcessing(false)
         },
       })
+
       handler.openIframe()
     } catch (err) {
-      setErrorMessage('Something went wrong. Please try again.')
-    } finally {
-      setIsProcessing(false)
+      setCheckoutError(err.message)
+      setProcessing(false)
     }
   }
 
+  console.log('spaghettiPortions:', spaghettiPortions, 'takeawayTotal:', takeawayTotal)
+
   return (
-    <section className='Order'>
-    <div className="order-page">
-      <div className="order-main">
-        <h1 className="order-title">Build Your Order</h1>
-
-        <div className="item-list">
-          {items.map((item) => (
-            <div className="item-row" key={item.id}>
-              <img src={item.image} alt={item.name} className="item-img" />
-              <div className="item-info">
-                <h3 className="item-name">
+    <section className="Order">
+      <div className="order-page">
+        <div className="order-main">
+          <h1 className="order-title">Choose Dishes</h1>
+          <div className="dish-grid">
+            {items.map((item) => (
+              <div className="dish-card" key={item.id}>
+                <img src={item.image} alt={item.name} className="dish-img" />
+                <p className="dish-name">
                   {item.name}
-                  {item.unit && <span className="item-unit"> (per {item.unit})</span>}
-                </h3>
-                <p className="item-desc">{item.description}</p>
-                <p className="item-price">₦{item.price.toLocaleString()}</p>
+                  {item.unit && <span className="dish-unit"> (per {item.unit})</span>}
+                </p>
+                <p className="dish-desc">{item.description}</p>
+                <div className="dish-footer">
+                  <span className="dish-price">₦{item.price.toLocaleString()}</span>
+                  <div className="quantity-control">
+                    <button onClick={() => updateQty(item.id, -1)}>−</button>
+                    <span>{quantities[item.id]}</span>
+                    <button onClick={() => updateQty(item.id, 1)}>+</button>
+                  </div>
+                </div>
               </div>
-              <div className="quantity-control">
-                <button onClick={() => updateQty(item.id, -1)}>−</button>
-                <span>{quantities[item.id]}</span>
-                <button onClick={() => updateQty(item.id, 1)}>+</button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <aside className="order-summary-panel">
-        <h3>Order Summary</h3>
-        {items
-          .filter((item) => quantities[item.id] > 0)
-          .map((item) => (
-            <div className="summary-line" key={item.id}>
-              <span>{item.name} x{quantities[item.id]}</span>
-              <span>₦{(item.price * quantities[item.id]).toLocaleString()}</span>
-            </div>
-          ))}
-        {spaghettiPortions > 0 && (
-          <div className="summary-line">
-            <span>Takeaway fee x{spaghettiPortions}</span>
-            <span>₦{takeawayTotal.toLocaleString()}</span>
+            ))}
           </div>
-        )}
-        {!hasItems && <p className="summary-empty">Your order is empty</p>}
-        <div className="summary-divider" />
-        <div className="summary-total">
-          <span>Total</span>
-          <span>₦{total.toLocaleString()}</span>
         </div>
 
-        {hasItems && (
-          <input
-            type="email"
-            placeholder="Your email"
-            value={customerEmail}
-            onChange={(e) => setCustomerEmail(e.target.value)}
-            className="checkout-email-input"
-          />
-        )}
+        <aside className="order-summary-panel">
+          <h3>Order Summary</h3>
+          <div className="summary-items">
+            {items
+              .filter((item) => quantities[item.id] > 0)
+              .map((item) => (
+                <div className="summary-item-row" key={item.id}>
+                  <img src={item.image} alt={item.name} className="summary-item-img" />
+                  <div className="summary-item-info">
+                    <p className="summary-item-name">{item.name}</p>
+                    <p className="summary-item-price">₦{item.price.toLocaleString()}</p>
+                  </div>
+                  <div className="summary-item-qty">
+                    <button onClick={() => updateQty(item.id, -1)}>−</button>
+                    <span>{quantities[item.id]}</span>
+                    <button onClick={() => updateQty(item.id, 1)}>+</button>
+                  </div>
+                  <span className="summary-item-total">
+                    ₦{(item.price * quantities[item.id]).toLocaleString()}
+                  </span>
+                </div>
+              ))}
+          </div>
 
-        {errorMessage && <p className="summary-error">{errorMessage}</p>}
+          {!hasItems && <p className="summary-empty">Your order is empty</p>}
 
-        <button
-          className="checkout-btn"
-          disabled={!hasItems || isProcessing}
-          onClick={handleCheckout}
-        >
-          {isProcessing ? 'Processing...' : 'Proceed to Pay'}
-        </button>
-      </aside>
-    </div>
+          <div className="summary-divider" />
+
+          {spaghettiPortions > 0 && (
+            <div className="summary-line">
+              <span>Takeaway fee (est.)</span>
+              <span>₦{takeawayTotal.toLocaleString()}</span>
+            </div>
+          )}
+          <div className="summary-line summary-total">
+            <span>Total (est.)</span>
+            <span>₦{total.toLocaleString()}</span>
+          </div>
+
+          {checkoutError && <p className="checkout-error">{checkoutError}</p>}
+
+          <button
+            className="checkout-btn"
+            disabled={!hasItems || processing}
+            onClick={handleCheckout}
+          >
+            {processing ? 'Processing...' : 'Continue to Payment'}
+          </button>
+        </aside>
+      </div>
     </section>
   )
 }

@@ -1,4 +1,3 @@
-// components/RequireAdmin.jsx
 import { Navigate } from 'react-router-dom'
 import { useAdminAuth } from '../context/AdminAuthContext.jsx'
 

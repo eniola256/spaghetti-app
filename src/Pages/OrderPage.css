@@ -1,14 +1,17 @@
-
+.Order {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: auto;
+  width: 100%;
+}
 
 .order-page {
   display: flex;
-  gap: 2.5rem;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 3rem 1.5rem;
-  font-family: 'Lato', sans-serif;
+  gap: 2rem;
+  width: 100%;
   align-items: flex-start;
-  z-index: 3; /* above the overlay */
 }
 
 .order-main {
@@ -17,120 +20,199 @@
 }
 
 .order-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 2.25rem;
-  margin-bottom: 1.5rem;
-  color: #fff;
+  font-size: 1.4rem;
+  margin: 0 0 1.25rem;
 }
 
-/* Row-based item list */
-.item-list {
+/* Dish grid — replaces the old single-row list */
+.dish-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.dish-card {
+  position: relative;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 14px;
+  padding-top: 44px; /* room for the overlapping image */
+  margin-top: 44px; /* pushes the whole card down so the image has space above it */
   display: flex;
   flex-direction: column;
-  gap: 14px;
 }
 
-.item-row {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  padding: 1rem;
-}
-
-.item-img {
-  width: 80px;
-  height: 80px;
+.dish-img {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
   object-fit: cover;
-  border-radius: 10px;
-  flex-shrink: 0;
+  border: 4px solid #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-.item-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.item-name {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.05rem;
+.dish-name {
+  font-weight: 600;
+  font-size: 0.95rem;
   margin: 0 0 4px;
 }
 
-.item-unit {
-  font-family: 'Lato', sans-serif;
-  font-size: 0.8rem;
-  color: #999;
+.dish-name,
+.dish-desc,
+.dish-footer {
+  text-align: center;
+}
+
+.dish-unit {
   font-weight: 400;
+  font-size: 0.75rem;
+  color: #999;
 }
 
-.item-desc {
-  font-size: 0.85rem;
+.dish-desc {
+  font-size: 0.78rem;
   color: #777;
-  margin: 0 0 6px;
+  margin: 0 0 10px;
   line-height: 1.4;
+  flex: 1;
 }
 
-.item-price {
+.dish-footer {
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dish-price {
   font-weight: 700;
   color: #c0392b;
-  margin: 0;
+  font-size: 0.9rem;
 }
 
-/* Quantity stepper — used per row now */
 .quantity-control {
   display: flex;
   align-items: center;
-  gap: 12px;
-  flex-shrink: 0;
+  gap: 8px;
 }
 
 .quantity-control button {
-  width: 32px;
-  height: 32px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   border: 1px solid #ddd;
   background: #fff;
   cursor: pointer;
-  font-size: 1.1rem;
+  font-size: 0.95rem;
 }
 
 .quantity-control span {
-  min-width: 16px;
+  min-width: 14px;
   text-align: center;
   font-weight: 600;
+  font-size: 0.85rem;
 }
 
-/* Sticky summary panel */
+/* Order summary sidebar — unchanged from before, still your dark accent panel */
 .order-summary-panel {
-  width: 320px;
+  max-width: 380px;
   flex-shrink: 0;
   position: sticky;
-  top: 2rem;
+  top: 1.5rem;
   background: #2b1a12;
   color: #fff;
   border-radius: 14px;
-  padding: 1.75rem;
+  padding: 1.5rem;
+  width: 100%;
 }
 
 .order-summary-panel h3 {
-  font-family: 'Playfair Display', serif;
   margin: 0 0 1.25rem;
+}
+
+.summary-items {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+.summary-item-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.summary-item-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.summary-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.summary-item-name {
+  margin: 0;
+  font-size: 0.82rem;
+  color: #fff;
+}
+
+.summary-item-price {
+  margin: 0;
+  font-size: 0.72rem;
+  color: #bbb;
+}
+
+.summary-item-qty {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.summary-item-qty button {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.3);
+  background: none;
+  color: #fff;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.summary-item-qty span {
+  font-size: 0.78rem;
+  min-width: 12px;
+  text-align: center;
+}
+
+.summary-item-total {
+  font-size: 0.8rem;
+  font-weight: 600;
+  min-width: 50px;
+  text-align: right;
 }
 
 .summary-line {
   display: flex;
   justify-content: space-between;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   margin-bottom: 10px;
   color: #eee;
 }
 
 .summary-empty {
   color: #bbb;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-style: italic;
 }
 
@@ -143,47 +225,37 @@
   display: flex;
   justify-content: space-between;
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   margin-bottom: 1.25rem;
 }
 
 .checkout-btn {
   width: 100%;
-  padding: 14px;
+  padding: 12px;
   background: #fff;
   color: #2b1a12;
   border: none;
   border-radius: 6px;
   font-weight: 700;
   cursor: pointer;
-  transition: transform 0.15s ease, opacity 0.15s ease;
-}
-
-.checkout-btn:hover {
-  transform: translateY(-2px);
 }
 
 .checkout-btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
-  transform: none;
+}
+.checkout-error {
+  color: #ff8a80;
+  font-size: 0.8rem;
+  margin-bottom: 10px;
 }
 
-/* Small screens */
 @media (max-width: 800px) {
   .order-page {
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
- .order-main h1 {
-    text-align: center;
   }
   .order-summary-panel {
     width: 100%;
     position: static;
-  }
-  .item-row {
-    flex-wrap: wrap;
   }
 }

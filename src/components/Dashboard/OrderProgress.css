@@ -1,0 +1,95 @@
+.progress-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.progress-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 18px 20px;
+}
+
+.progress-card-id {
+  margin: 0 0 16px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.progress-bar {
+  display: flex;
+  align-items: flex-start;
+}
+
+.progress-step {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.progress-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #eee;
+  z-index: 1;
+}
+
+.progress-step.done .progress-dot {
+  background: #c0392b;
+}
+
+.progress-connector {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background: #eee;
+  z-index: 0;
+}
+
+.progress-step.done .progress-connector {
+  background: #c0392b;
+}
+
+.progress-label {
+  margin-top: 6px;
+  font-size: 0.7rem;
+  color: #999;
+}
+
+.progress-step.done .progress-label {
+  color: #c0392b;
+  font-weight: 600;
+}
+
+.progress-status-msg {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.progress-error {
+  color: #c0392b;
+}
+.confirm-pickup-btn {
+  margin-top: 14px;
+  width: 100%;
+  padding: 10px;
+  background: #c0392b;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.confirm-pickup-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
