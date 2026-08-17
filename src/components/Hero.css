@@ -150,7 +150,7 @@
   }
 }
 
-@media (max-width: 780px) {
+@media (max-width: 980px) {
   .hero {
     flex-direction: column;
     height: auto;
@@ -162,14 +162,14 @@
   .hero-title{
     display: flex;
     flex-direction: row;
-    font-size: 5rem;
-    margin: 20px 0 0 0;
+    font-size: 6rem;
+    margin: 20px 0 ;
   }
   .btm-tit{
     padding: 0 15px ;
   }
   .hero-subtitle{
-    font-size: 1rem;
+    font-size: 1.8rem;
   }
   .hero-pills-col{
     display:none;
@@ -226,6 +226,12 @@
     position: relative;
     z-index: 2; /* sits above the red slash */
   }
+  .small-cta {
+    margin: 0;
+    font-size: 1.5rem;
+    position: relative;
+    z-index: 4;
+  }
 }
 
 @media (max-width: 480px) {
@@ -238,10 +244,11 @@
     margin: 20px 0;
     position: relative;
     z-index: 4;
+    font-size: 5rem;
   }
 
   .hero-subtitle {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     position: relative;
     z-index: 4;
   }
@@ -263,5 +270,4 @@
     position: relative;
     z-index: 4;
   }
-  
 }
