@@ -35,12 +35,17 @@
   position: relative;
   background: #fff;
   border: 1px solid #eee;
-  border-radius: 12px;
   padding: 14px;
   padding-top: 44px; /* room for the overlapping image */
   margin-top: 44px; /* pushes the whole card down so the image has space above it */
   display: flex;
   flex-direction: column;
+  width: 100%;
+  border: none;
+  border-radius: 16px;
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.12),
+    0 20px 45px rgba(0, 0, 0, 0.10);
 }
 
 .dish-img {
@@ -270,7 +275,7 @@
 
   .dish-card {
     width: 100%;
-    border: 1px solid red;
+    border: 1px solid #eee;
     padding-top: 100px;
     margin-top: 65px;
   }
