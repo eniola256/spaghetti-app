@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import MenuSection from '../components/Dashboard/MenuSection.jsx'
 import OrderSection from '../components/Dashboard/OrderSection.jsx'
 import OrderProgress from '../components/Dashboard/OrderProgress.jsx'
 import './Dashboard.css'
+
 
 const navItems = [
   { id: 'menu', label: 'Menu' },
@@ -15,6 +16,10 @@ function Dashboard() {
   const [selectedOrderId, setSelectedOrderId] = useState(null)
   const [menuOpen, setMenuOpen] = useState(false)
 
+  useEffect(() => {
+  window.scrollTo(0, 0)
+}, [])
+
   const goToProgress = (id) => {
     setActiveNav('progress')
     setSelectedOrderId(id)
@@ -25,6 +30,8 @@ function Dashboard() {
     setActiveNav(id)
     setMenuOpen(false)
   }
+
+  
 
   return (
     <div className="dashboard-shell">

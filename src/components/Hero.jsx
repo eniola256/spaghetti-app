@@ -42,7 +42,7 @@ function Hero() {
           </div>
         </div>
       </div>
-       <Link to="/order" className="hero-cta small-cta ">Order Now</Link>
+       <Link to="/dashboard" className="hero-cta small-cta ">Order Now</Link>
     </section>
   )
 }

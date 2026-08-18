@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Hero from './components/Hero.jsx'
-import OrderPage from './Pages/OrderPage.jsx'
 import Dashboard from './Pages/Dashboard.jsx'
 import AdminDashboard from './Pages/AdminDashboard.jsx'
 import NavBar from './components/NavBar.jsx'
@@ -20,16 +19,11 @@ function App() {
 
             <div className="app">
               <NavBar />
-
               <AuthModal />
-
               <Routes>
                 <Route path="/" element={<Hero />} />
-                <Route path="/order" element={<OrderPage />} />
                 <Route path="/dashboard" element={<Dashboard />} />
-
                 <Route path="/admin-login" element={<AdminLogin />} />
-
                 <Route
                   path="/admin"
                   element={
@@ -40,7 +34,6 @@ function App() {
                 />
               </Routes>
             </div>
-
           </BrowserRouter>
         </AuthModalProvider>
       </AdminAuthProvider>

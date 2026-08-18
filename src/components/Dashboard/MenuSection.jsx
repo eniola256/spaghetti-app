@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import OrderPage from '../../Pages/OrderPage.jsx'
+import OrderContent from '../Order/OrderContent.jsx'
 import './MenuSection.css'
 
 const subTabs = [
@@ -60,6 +60,7 @@ function MenuSection({ onMenuToggle }) {
       >
         <h2 className="menu-section-heading">Packaged</h2>
         <p>Pre-set combo meals go here</p>
+        
       </section>
 
       <section
@@ -68,7 +69,7 @@ function MenuSection({ onMenuToggle }) {
         className="menu-section-block"
       >
         <h2 className="menu-section-heading">Custom</h2>
-        <OrderPage />
+        <OrderContent />
       </section>
 
       <section
@@ -78,6 +79,7 @@ function MenuSection({ onMenuToggle }) {
       >
         <h2 className="menu-section-heading">Your recents</h2>
         <p>Recently ordered items go here</p>
+        
       </section>
     </div>
   )

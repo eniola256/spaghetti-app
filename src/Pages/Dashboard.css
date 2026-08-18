@@ -107,6 +107,11 @@
     padding: 0 1.5rem;
   }
 
+  .sticky-sub-tabs {
+  background: #fff;
+  padding-top: 20px;
+ }
+
   .sidebar {
     position: fixed;
     top: 0;
@@ -135,11 +140,8 @@
   .sidebar-close-btn {
     display: flex;
   }
-}
 
-@media (max-width: 480px) {
-  .dashboard-shell {
-    flex-direction: column;
+  .hamburger-btn {
+    display: flex;
   }
-
 }
