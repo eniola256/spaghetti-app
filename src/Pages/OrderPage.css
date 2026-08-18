@@ -301,7 +301,7 @@
 
 @media (max-width:480px ){
   .dish-grid{
-    padding: 0 10px;
+    padding: 0 20px;
   }
   .dish-card img{
     width: 100px;

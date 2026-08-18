@@ -136,3 +136,10 @@
     display: flex;
   }
 }
+
+@media (max-width: 480px) {
+  .dashboard-shell {
+    flex-direction: column;
+  }
+
+}
