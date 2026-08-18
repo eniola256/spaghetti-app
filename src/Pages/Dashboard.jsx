@@ -13,21 +13,41 @@ const navItems = [
 function Dashboard() {
   const [activeNav, setActiveNav] = useState('menu')
   const [selectedOrderId, setSelectedOrderId] = useState(null)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   const goToProgress = (id) => {
     setActiveNav('progress')
     setSelectedOrderId(id)
+    setMenuOpen(false)
+  }
+
+  const handleNavClick = (id) => {
+    setActiveNav(id)
+    setMenuOpen(false)
   }
 
   return (
     <div className="dashboard-shell">
-      <aside className="sidebar">
-        <p className="sidebar-brand">Spag House</p>
+      {menuOpen && (
+        <div className="sidebar-overlay" onClick={() => setMenuOpen(false)} />
+      )}
+
+      <aside className={`sidebar ${menuOpen ? 'open' : ''}`}>
+        <div className="sidebar-header">
+          <button
+            className="sidebar-close-btn"
+            onClick={() => setMenuOpen(false)}
+            aria-label="Close menu"
+          >
+            <span className="material-symbols-outlined">close</span>
+          </button>
+        </div>
+
         {navItems.map((item) => (
           <button
             key={item.id}
             className={`sidebar-item ${activeNav === item.id ? 'active' : ''}`}
-            onClick={() => setActiveNav(item.id)}
+            onClick={() => handleNavClick(item.id)}
           >
             {item.label}
           </button>
@@ -35,10 +55,18 @@ function Dashboard() {
       </aside>
 
       <main className="dashboard-main">
-        {activeNav === 'menu' && <MenuSection />}
-        {activeNav === 'orders' && <OrderSection onSeeProgress={goToProgress} />}
+        {activeNav === 'menu' && (
+          <MenuSection onMenuToggle={() => setMenuOpen(true)} />
+        )}
+        {activeNav === 'orders' && (
+          <OrderSection onSeeProgress={goToProgress} onMenuToggle={() => setMenuOpen(true)} />
+        )}
         {activeNav === 'progress' && (
-          <OrderProgress orderId={selectedOrderId} onBack={() => setActiveNav('orders')} />
+          <OrderProgress
+            orderId={selectedOrderId}
+            onBack={() => setActiveNav('orders')}
+            onMenuToggle={() => setMenuOpen(true)}
+          />
         )}
       </main>
     </div>

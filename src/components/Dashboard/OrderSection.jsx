@@ -10,7 +10,7 @@ const statusLabels = {
   picked_up: 'Picked up',
 }
 
-function OrdersSection({ onSeeProgress }) {
+function OrdersSection({ onSeeProgress, onMenuToggle }) {
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -56,26 +56,37 @@ function OrdersSection({ onSeeProgress }) {
     </div>
   )
 
-  if (loading) return <p className="orders-status-msg">Loading your orders...</p>
-  if (error) return <p className="orders-status-msg orders-error">{error}</p>
-
   return (
     <div className="orders-section">
-      <div className="orders-group">
-        <h3 className="orders-group-title">Pending</h3>
-        {pending.length === 0 && <p className="orders-empty">No pending orders</p>}
-        <div className="orders-list">
-          {pending.map((order) => <OrderCard order={order} key={order.id} />)}
-        </div>
+      <div className="section-header">
+        <button className="hamburger-btn" onClick={onMenuToggle} aria-label="Toggle menu">
+          <span className="material-symbols-outlined">menu</span>
+        </button>
+        <h2 className="section-title">Orders</h2>
       </div>
 
-      <div className="orders-group">
-        <h3 className="orders-group-title">Delivered</h3>
-        {delivered.length === 0 && <p className="orders-empty">No delivered orders yet</p>}
-        <div className="orders-list">
-          {delivered.map((order) => <OrderCard order={order} key={order.id} />)}
-        </div>
-      </div>
+      {loading && <p className="orders-status-msg">Loading your orders...</p>}
+      {error && <p className="orders-status-msg orders-error">{error}</p>}
+
+      {!loading && !error && (
+        <>
+          <div className="orders-group">
+            <h3 className="orders-group-title">Pending</h3>
+            {pending.length === 0 && <p className="orders-empty">No pending orders</p>}
+            <div className="orders-list">
+              {pending.map((order) => <OrderCard order={order} key={order.id} />)}
+            </div>
+          </div>
+
+          <div className="orders-group">
+            <h3 className="orders-group-title">Delivered</h3>
+            {delivered.length === 0 && <p className="orders-empty">No delivered orders yet</p>}
+            <div className="orders-list">
+              {delivered.map((order) => <OrderCard order={order} key={order.id} />)}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   )
 }

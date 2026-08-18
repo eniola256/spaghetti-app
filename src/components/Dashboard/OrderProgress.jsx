@@ -11,7 +11,7 @@ const stages = [
   { key: 'completed', label: 'Completed' },
 ]
 
-function OrderProgress() {
+function OrderProgress({ onMenuToggle }) {
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -49,7 +49,7 @@ function OrderProgress() {
         const data = await res.json().catch(() => ({}))
         throw new Error(data.error || 'Could not confirm pickup')
       }
-      await fetchOrders() // this order will now drop out of the active list
+      await fetchOrders()
     } catch (err) {
       alert(err.message)
     } finally {
@@ -57,44 +57,55 @@ function OrderProgress() {
     }
   }
 
-  if (loading) return <p className="progress-status-msg">Loading...</p>
-  if (error) return <p className="progress-status-msg progress-error">{error}</p>
-  if (orders.length === 0) {
-    return <p className="progress-status-msg">No pending orders right now.</p>
-  }
-
   return (
-    <div className="progress-list">
-      {orders.map((order) => {
-        const currentIndex = stages.findIndex((s) => s.key === order.status)
-        return (
-          <div className="progress-card" key={order.id}>
-            <p className="progress-card-id">{order.reference}</p>
-            <div className="progress-bar">
-              {stages.map((stage, i) => (
-                <div
-                  className={`progress-step ${i <= currentIndex ? 'done' : ''} ${i === currentIndex ? 'current' : ''}`}
-                  key={stage.key}
-                >
-                  <div className="progress-dot" />
-                  {i < stages.length - 1 && <div className="progress-connector" />}
-                  <p className="progress-label">{stage.label}</p>
-                </div>
-              ))}
-            </div>
+    <div>
+      <div className="section-header">
+        <button className="hamburger-btn" onClick={onMenuToggle} aria-label="Toggle menu">
+          <span className="material-symbols-outlined">menu</span>
+        </button>
+        <h2 className="section-title">Order progress</h2>
+      </div>
 
-            {order.status === 'picked_up' && (
-              <button
-                className="confirm-pickup-btn"
-                onClick={() => confirmPickup(order.id)}
-                disabled={confirmingId === order.id}
-              >
-                {confirmingId === order.id ? 'Confirming...' : 'Confirm Pickup'}
-              </button>
-            )}
-          </div>
-        )
-      })}
+      {loading && <p className="progress-status-msg">Loading...</p>}
+      {error && <p className="progress-status-msg progress-error">{error}</p>}
+      {!loading && !error && orders.length === 0 && (
+        <p className="progress-status-msg">No pending orders right now.</p>
+      )}
+
+      {!loading && !error && orders.length > 0 && (
+        <div className="progress-list">
+          {orders.map((order) => {
+            const currentIndex = stages.findIndex((s) => s.key === order.status)
+            return (
+              <div className="progress-card" key={order.id}>
+                <p className="progress-card-id">{order.reference}</p>
+                <div className="progress-bar">
+                  {stages.map((stage, i) => (
+                    <div
+                      className={`progress-step ${i <= currentIndex ? 'done' : ''} ${i === currentIndex ? 'current' : ''}`}
+                      key={stage.key}
+                    >
+                      <div className="progress-dot" />
+                      {i < stages.length - 1 && <div className="progress-connector" />}
+                      <p className="progress-label">{stage.label}</p>
+                    </div>
+                  ))}
+                </div>
+
+                {order.status === 'picked_up' && (
+                  <button
+                    className="confirm-pickup-btn"
+                    onClick={() => confirmPickup(order.id)}
+                    disabled={confirmingId === order.id}
+                  >
+                    {confirmingId === order.id ? 'Confirming...' : 'Confirm Pickup'}
+                  </button>
+                )}
+              </div>
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }

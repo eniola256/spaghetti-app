@@ -74,18 +74,65 @@
   font-weight: 600;
 }
 
-@media (max-width: 700px) {
+.sidebar-overlay {
+  display: none;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
+.sidebar-close-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.sidebar-close-btn .material-symbols-outlined {
+  font-size: 30px;
+  color: #555;
+}
+
+/* ---------- Small screens: sidebar becomes a slide-in drawer ---------- */
+@media (max-width: 780px) {
   .dashboard-shell {
     flex-direction: column;
   }
-  .sidebar {
-    width: 100%;
-    flex-direction: row;
-    overflow-x: auto;
-    border-right: none;
-    border-bottom: 1px solid #eee;
+
+  .dashboard-main {
+    padding: 0 1.5rem;
   }
-  .sidebar-brand {
-    display: none;
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 220px;
+    padding-top: 2rem;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    z-index: 160;
+    flex-direction: column;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 130;
+  }
+
+  .sidebar-close-btn {
+    display: flex;
   }
 }

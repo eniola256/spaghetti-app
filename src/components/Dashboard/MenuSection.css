@@ -1,8 +1,9 @@
 .sticky-sub-tabs {
   position: sticky;
-  top: 0;
+  top: 64px; /* adjust to your Navbar's actual rendered height */
   background: #fff;
   z-index: 5;
+  padding-top: 20px;
 }
 
 .menu-section-block {
@@ -17,3 +18,15 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
+
+.sub-tabs {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+}
+
+
+

@@ -41,10 +41,12 @@
   border-radius: 999px;
   text-decoration: none;
   transition: transform 0.15s ease;
+  border: 1px solid #ff8800cc;
 }
 
 .navbar-cta:hover {
   transform: translateY(-1px);
+  border: 1px solid #fff;
 }
 .navbar-link-btn {
   background: none;

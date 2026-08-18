@@ -22,23 +22,23 @@ function Hero() {
         <div className="pill pill-active">
           <img src="/spag2.png" alt="Spaghetti" className="pill-img" />
           <div className="pill-txt">
-            <span>Spaghetti</span>
-            <span>₦500</span>
+            <span>Spaghetti + Sausage </span>
+            <span>₦1,800</span>
           </div>
           
         </div>
         <div className="pill">
           <img src="/spag2.png" alt="Spaghetti" className="pill-img" />
           <div className="pill-txt">
-            <span>Fish</span>
-            <span>₦800</span>
+            <span>Spaghetti + Fish</span>
+            <span>₦1,500</span>
           </div>
         </div>
         <div className="pill">
           <img src="/spag2.png" alt="Spaghetti" className="pill-img" />
           <div className="pill-txt">
-            <span>Plantain</span>
-            <span>₦500</span>
+            <span>Spaghetti + egg</span>
+            <span>₦1,200</span>
           </div>
         </div>
       </div>

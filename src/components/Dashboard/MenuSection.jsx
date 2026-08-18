@@ -8,7 +8,7 @@ const subTabs = [
   { id: 'recent', label: 'Recent' },
 ]
 
-function MenuSection() {
+function MenuSection({ onMenuToggle }) {
   const [activeTab, setActiveTab] = useState('packaged')
   const sectionRefs = useRef({})
 
@@ -21,7 +21,7 @@ function MenuSection() {
           }
         })
       },
-      { rootMargin: '-40% 0px -50% 0px' } // triggers when a section is roughly centered
+      { rootMargin: '-40% 0px -50% 0px' }
     )
 
     Object.values(sectionRefs.current).forEach((el) => {
@@ -38,6 +38,10 @@ function MenuSection() {
   return (
     <div>
       <div className="sub-tabs sticky-sub-tabs">
+        <button className="hamburger-btn" onClick={onMenuToggle} aria-label="Toggle menu">
+          <span className="material-symbols-outlined">menu</span>
+        </button>
+
         {subTabs.map((tab) => (
           <button
             key={tab.id}
